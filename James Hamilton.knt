@@ -1,0 +1,273 @@
+#!GFKNT 2.0
+# This is an automatically generated file. Do not edit.
+#/
+#?
+#$1
+#C19-02-2013 12:20:41
+#^010000000000000000000000
+%+
+NN=New note
+ID=1
+II=0
+DC=19-02-2013 12:20:41
+TI=0
+TS=4
+CX=773
+CY=0
+BG=clWindow
+CH=1
+FC=clWindowText
+FN=Tahoma
+FS=8
+LN=6153
+ST=
+FL=101110000000100001000000
+SN=0
+TW=353
+EN=New node
+TB=clWindow
+TH=1
+TC=clWindowText
+TN=Tahoma
+TZ=8
+TY=
+%-
+LV=0
+ND=Fault Tolerance vs. Fault Avoidance: Testing doesn't scale
+DI=1
+NF=000000000000000000000000
+BC=clWindow
+IX=0
+SS=773
+%:
+{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 Tahoma;}}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\lang6153\f0\fs16 Problem: As large TP systems get bigger and more complex the ability to test effectively and remove bugs becomes increasingly harder.\par
+\par
+Hamiltons Advice: Build fault tolerance into the system itself so that errors do not bring down the system. If errors cannot be avoided then build the system to expect and cope with them. Allow the errors to occur but make the errors invisible to the end users.\par
+\par
+e.g.\par
+- Expect memory leaks and unallocated variables to crop up. One company simply restarts their machines regularly to reset the system. It's a lot cheaper than trying to eradicate every single memory leak. Remove admins from having to run the system. It should run itself without needing admins to control it.\par
+\par
+-Replace parts regularly. One company replaces some hardware components on a weekly basis. \par
+}
+%+
+NN=Head First Design Patterns
+ID=2
+II=0
+DC=26-02-2013 20:32:23
+TI=1
+TS=4
+CX=141
+CY=0
+BG=clWindow
+CH=1
+FC=clWindowText
+FN=Tahoma
+FS=8
+LN=6153
+ST=
+FL=101110000000100000000000
+SN=3
+TW=40
+EN=New node
+TB=clWindow
+TH=1
+TC=clWindowText
+TN=Tahoma
+TZ=8
+TY=
+%-
+LV=0
+ND=Factory Pattern
+DI=1
+NF=000000000000000000000000
+BC=clWindow
+IX=0
+SS=399
+%:
+{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 Tahoma;}}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\lang6153\f0\fs16 Factory Method - Used when you need more than one product\par
+\par
+Utilizes an abstract method in the parent class. This class is then extended and the subclass then creates the needed object.\par
+\par
+Abstract Factory - Used when you need families of products. An abstract class is first created with abstract methods. These methods are really Factory methods. The subclasses then instantiate the required objects.\par
+}
+%-
+LV=0
+ND=Singleton Pattern
+DI=2
+NF=000000000000000000000000
+BC=clWindow
+IX=0
+SS=1115
+%:
+{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 Tahoma;}}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\lang6153\f0\fs16 The Singleton Pattern ensures a class has only one instance, and provides a global point of access to it.\par
+\par
+Multithreaded applications can create more than one unique instance of a singleton class. \par
+\par
+Options :\par
+\par
+1.) Insert "synchronized" into the getInstance() method to ensure two threads cannot access the method at the same time. Note:: this can reduce performance 100x. Only use in non performance areas.\par
+\par
+2.) Use eagerly created instance rather than lazy option.\par
+\par
+e.g. private static Singleton uniqueInstance = new Singleton();\par
+\par
+This forces the JVM to create the singleton when the class is loaded. This gaurantees that the singleton is thread safe.\par
+\par
+3.) Create a synchronized block that only works the first time through. This provides good performance and is thread safe. Note:: Can only be used with JVM 1.5 or higher.\par
+\par
+e.g.\par
+\par
+public class Singleton \{\par
+\tab private \b volatile\b0  static Singleton uniqueInstance;\par
+\par
+\tab private Singleton() \{\}\par
+\par
+\tab public static Singleton getInstance() \{\par
+\tab\tab if (uniqueInstance == null) \{\par
+\tab\tab\tab synchronized (Singleton.class) \{\par
+\tab\tab\tab\tab if (uniqueInstance == null) \{\par
+\tab\tab\tab\tab\tab uniqueInstance = new Singleton();\par
+\tab\tab\tab\tab\}\par
+\tab\tab\tab\}\par
+\tab\tab\}\par
+\tab\}\par
+\}\par
+}
+%-
+LV=0
+ND=Command Pattern
+DI=3
+NF=000000000000000000000000
+BC=clWindow
+IX=0
+SS=2295
+%:
+{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 Tahoma;}{\f1\fnil\fcharset2 Symbol;}}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\lang6153\f0\fs16 The Command Pattern encapsulates a request as an object, thereby letting you parameterize other objects with different requests, queue or log requests, and support undoable operations.\par
+\par
+Each concrete implementation of a command executes one single method from that class. e.g. each method in Light class will have its own command class.\par
+\par
+Command pattern can be used to queue requests into schedulers, thread pools and job queues.\par
+\par
+1.) Create Command interface\par
+\par
+public interface Command \{\par
+\tab public void execute();\par
+\}\par
+\par
+2.) Create a concrete implementation of a command e.g. turn on lights. Can be extended to implement undo(), store() and load() events.\par
+\par
+Load and store events work by saving each command to disk after it works on some data. This saves us from having to save the dataset, which is potentially large, to disk in real time. If the system crashes, then we take the dataset at its last saved to disk checkpoint and then apply all the commands again to the dataset up to the point of the crash.\par
+\par
+public class LightsOnCommand implements Command \{\par
+\par
+\tab Light light;\par
+\par
+\tab public LightsOnCommand(Light light) \{\par
+\tab\tab this.light = light;\par
+\tab\}\par
+\par
+\tab //cal the lights execution method. in this case it is the on method\par
+\tab public void execute() \{\par
+\tab\tab light.on();\par
+\tab\}\par
+\par
+\tab public void undo() \{\par
+\tab\tab light.off();\par
+\tab\}\par
+\par
+\tab public void store() \{\par
+\par
+\tab\}\par
+\par
+\tab public void load() \{\par
+\par
+\tab\}\par
+\par
+\}\par
+\par
+3.) Create an invoker to hold our command class and invoke our execute method. In this case we will call it the remote\par
+\par
+public class SimpleRemoteControl \{\par
+\tab Command slot;\par
+\par
+\tab public void setCommand(Command command) \{\par
+\tab\tab slot = command;\par
+\tab\}\par
+\par
+\tab public void buttonWasPressed() \{\par
+\tab\tab slot.execute();\par
+\tab\}\par
+\}\par
+\par
+4.) Finally we pull it all together in our client (test) class\par
+\par
+public class RemoteControlTest \{\par
+\tab public static void main(String[] args) \{\par
+\tab\tab SimpleRemoteControl remote = new SimpleRemoteControl();\par
+\tab\tab Light light = new Light();\par
+\par
+\tab\tab LightOnCommand lightOn = new LightOnCommand(light);\par
+\par
+\tab\tab remote.setCommand(lightOn);\par
+\tab\tab remote.buttonWasPressed();\par
+\tab\}\par
+\}\par
+\par
+\par
+Book end of chapter notes:\par
+\par
+\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-200\li240 The Command Pattern decouples an object making a request from the one that knows how to perform it.\par
+\pard\par
+\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-200\li240 A Command object is at the center of this decoupling and encapsulates a receiver with an action (or set of actions) .\par
+\pard\li40\par
+\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-200\li240 An invoker makes a request of \par
+\pard a Command object by calling \par
+its execute() method, which \par
+invokes those actions on the \par
+receiver.\par
+  Invokers can be parameterized \par
+with Commands, even \par
+dynamically at runtime.\par
+  Commands may support undo \par
+by implementing an undo \par
+method that restores the object \par
+to its previous state before \par
+the execute() method was last \par
+called.\par
+  Macro Commands are a simple \par
+extension of Command that \par
+allow multiple commands to \par
+be invoked.  Likewise,  Macro \par
+Commands can easily support \par
+undo().\par
+  In practice, it is not uncommon \par
+for \ldblquote smart\rdblquote  Command objects \par
+to implement the request \par
+themselves rather than \par
+delegating to a receiver.\par
+  Commands may also be used \par
+to implement logging and \par
+transactional systems.\par
+}
+%-
+LV=0
+ND=Adapter & Facade Patterns
+DI=4
+NF=000000000000000000000000
+BC=clWindow
+IX=0
+SS=141
+%:
+{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 Tahoma;}}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\lang6153\f0\fs16 The adapter pattern is like a US to Euro electricity adapter plug. \par
+\par
+e.g public interface Turkey \{\par
+\tab public void gobble();\par
+\tab public void fly();\par
+\}\par
+}
+%%
